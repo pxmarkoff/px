@@ -1,6 +1,6 @@
 import { NavigationState, ReduxAction } from '@/types/types';
 
-export const inititalState: NavigationState = {
+const inititalState: NavigationState = {
   navigationSelected: 'Projects',
 };
 

@@ -3,12 +3,15 @@ import * as React from 'react';
 import AppUI from './UI';
 import useRouteName from '@/hooks/useRouteName';
 import useScreenMode from '@/hooks/useScreenMode';
+import withConnect from '@/hoc/withConnect';
 
-function App() {
+import { Props, StateProps } from './types';
+
+function App({ isPreload }: Props) {
   useScreenMode();
   useRouteName();
 
-  return <AppUI />;
+  return <AppUI isPreload={isPreload} />;
 }
 
-export default App;
+export default withConnect<{}, StateProps, {}>(App, [{ app: 'isPreload' }]);

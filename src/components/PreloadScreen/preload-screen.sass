@@ -1,0 +1,32 @@
+.preload-screen
+    @include flex-center
+
+    background: $black-hard
+    height: 100vh
+    position: fixed
+    top: 0
+    width: 100vw
+    z-index: $z-preload-screen
+
+    &__content
+        color: $white-1
+        font-family: 'Suisse'
+        letter-spacing: normal
+        mix-blend-mode: difference
+
+    &__overlay
+        background: $white-1
+        height: 100vh
+        left: 0
+        position: absolute
+        top: 0
+    
+    @include xs
+        &__content
+            font-size: 18px
+    @include lg
+        &__content
+            font-size: 2vw
+    @include xl
+        &__content
+            font-size: 28px

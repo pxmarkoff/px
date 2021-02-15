@@ -1,6 +1,6 @@
 import { FilterState, ReduxAction } from '@/types/types';
 
-export const inititalState: FilterState = {
+const inititalState: FilterState = {
   filterSelected: 'All',
 };
 

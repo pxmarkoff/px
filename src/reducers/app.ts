@@ -1,6 +1,6 @@
 import { AppState, ReduxAction } from '@/types/types';
 
-export const inititalState: AppState = {
+const inititalState: AppState = {
   isPreload: true,
   route: 'Home',
   screenMode: 'mobile',

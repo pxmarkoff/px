@@ -1,4 +1,30 @@
 .slide
     @include flex-center
-    height: calc(100vh - 100px)
+    height: calc(100vh - #{$header-height})
+    position: relative
     width: 100%
+    border: 1px solid pink
+
+    &__title
+        cursor: pointer
+        user-select: none
+        position: absolute
+        // border: 1px solid blue
+        bottom: 0
+        top: 0
+        color: $black-hard
+        margin: auto
+        height: max-content
+        width: max-content
+        left: 0
+        right: 0
+        text-transform: uppercase
+        font:
+            family: 'Suisse'
+            size: 15vw
+            weight: bold
+        letter-spacing: 1px
+        z-index: 120
+        text-align: center
+        mix-blend-mode: difference
+            // family: 'Helvetica Neue'
