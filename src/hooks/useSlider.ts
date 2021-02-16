@@ -18,6 +18,18 @@ interface UseSlider {
 function useSlider({ slide, slider, slides }: UseSlider) {
   const dispatch = useDispatch();
 
+  const [isReady, setIsReady] = React.useState(false);
+
+  React.useEffect(() => {
+    document.getElementById(slide) &&
+    document.getElementById(slider) &&
+    document.getElementById(slides)
+      ? setIsReady(true)
+      : setIsReady(false);
+  }, []);
+
+  console.log(isReady);
+
   // Receive properies from state
   const currentPos = useSelector(
     (state: ReduxState) => state.slider.currentPos
