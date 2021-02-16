@@ -1,12 +1,8 @@
 export interface Props {
   currentPos: number;
-  endPos: number;
-  setCurrentPos: (value: number) => void;
-  setEndPos: (value: number) => void;
+  slideHeight: number;
 }
 
-export interface PropsUI {}
+export interface PropsUI extends Pick<Props, 'currentPos' | 'slideHeight'> {}
 
-export type StateProps = Pick<Props>;
-
-export type DispatchProps = Pick<Props>;
+export type StateProps = Pick<Props, 'currentPos' | 'slideHeight'>;

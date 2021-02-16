@@ -5,4 +5,6 @@ export interface Props {
   deviceType: DeviceType;
 }
 
-export interface PropsUI extends Props {}
+export interface PropsUI extends Props {
+  isAnimation: boolean;
+}

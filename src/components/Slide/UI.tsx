@@ -8,7 +8,7 @@ import { budgetTracker } from '@/data/images';
 
 function SlideUI() {
   return (
-    <article className='slide'>
+    <article className='slide' id='slide'>
       <h2 className='slide__title'>
         Budget
         <br />

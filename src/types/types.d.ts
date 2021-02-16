@@ -1,4 +1,4 @@
-/* STATES */
+// All states of app
 export interface AppState {
   isPreload: boolean;
   route: string;
@@ -16,9 +16,10 @@ export interface NavigationState {
 export interface SliderState {
   currentPos: number;
   endPos: number;
+  slideHeight: number;
 }
 
-/* REDUX STUFF */
+// Things of Redux
 export interface ReduxAction {
   type: string;
   payload?: any;
@@ -31,12 +32,12 @@ export interface ReduxState {
   slider: SliderState;
 }
 
-/* DATA */
+// Data types
 export type ScreenMode = 'mobile' | 'desktop';
 
 export type DeviceType = 'mobile' | 'tablet' | 'laptop';
 
-/* MODEL */
+// Model types
 export interface Project {
   address: string;
   deviceType: DeviceType;

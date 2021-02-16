@@ -8,7 +8,9 @@ $glow-color: #494949
     overflow: hidden
     background: transparent
 
-    &__overlay
+    &__light
+        background: #373737
+        border-radius: 50%
         position: absolute
         top: 0
         right: 0
@@ -40,10 +42,10 @@ $glow-color: #494949
             height: 50%
             bottom: 10px
 
-        &__overlay
+        &__light
             height: 140px
             width: 500px
 
     @include lg
-        &__overlay
+        &__light
             width: 600px
