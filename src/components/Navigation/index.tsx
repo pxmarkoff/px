@@ -3,10 +3,10 @@ import * as React from 'react';
 import withConnect from '@/hoc/withConnect';
 import NavigationUI from './UI';
 import useCbWithParam from '@/hooks/useCbWithParam';
+import routes from '@/data/routes';
 
 import { DispatchProps, Props, StateProps } from './types';
 import { useLocation } from 'react-router-dom';
-import routes from '@/data/routes';
 
 function Navigation({ navigationSelected, setNavigationSelected }: Props) {
   const { pathname } = useLocation();
@@ -18,7 +18,7 @@ function Navigation({ navigationSelected, setNavigationSelected }: Props) {
       setNavigationSelected(
         routes.find(({ route }) => route === pathname).name
       ),
-    []
+    [pathname]
   );
 
   return (

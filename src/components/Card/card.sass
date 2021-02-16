@@ -1,0 +1,41 @@
+.card
+    position: relative
+    overflow: hidden
+
+    &__cover
+        @include absolute-center
+        border-radius: 3px
+        position: absolute
+        transform: skewX(-16deg) scale(1.3, 1.1) rotate(-1deg)
+        width: 44vw
+        bottom: 3px
+        left: 3px
+        filter: blur(0.3px)
+
+    &__tablet
+        transform: rotate(-25deg) scaleX(-1) 
+
+    &__title
+        @include absolute-center
+        color: $black-hard
+        cursor: pointer
+        font:
+            family: 'Suisse'
+            size: 11vw
+            weight: bold
+        height: max-content
+        mix-blend-mode: difference
+        position: absolute
+        text-align: center
+        text-transform: uppercase
+        width: max-content
+        user-select: none
+
+    @include lg
+        &__cover
+            width: 450px
+        
+        &__title
+            font-size: 110px
+
+        

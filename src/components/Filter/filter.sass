@@ -3,6 +3,14 @@
     padding: 5px 0
     overflow: hidden
     width: 100%
+    position: relative
+
+    &__underline
+        background: $white-2
+        position: absolute
+        height: 2px
+        bottom: 5px
+        left: 0
 
     &__list
         @include flex-center
@@ -17,17 +25,9 @@
         padding: 0 20px
         transition: all 0.5s
 
-        &:after
-            background: transparent
-            content: ''
-            display: block
-            height: 2px
-            width: 100%
-
         &--selected
             color: $white-2
-            &:after
-                background: $white-2
+
 
     @include md
         &__list

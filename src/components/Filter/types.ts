@@ -6,6 +6,8 @@ export interface Props {
 export interface PropsUI extends Pick<Props, 'filterSelected'> {
   isFilterOnPage: boolean;
   onTapFilter: (value: string) => () => void;
+  underlinePos: number;
+  underlineWidth: number;
 }
 
 export type StateProps = Pick<Props, 'filterSelected'>;

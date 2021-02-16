@@ -1,8 +1,18 @@
-export interface Props {
+import { Project } from '@/types/types';
+
+export interface Props extends Project {
   currentPos: number;
   index: number;
 }
 
-export type OwnProps = Pick<Props, 'index'>;
+export interface PropsUI {
+  isAnimation: boolean;
+  project: Project;
+}
+
+export type OwnProps = Pick<
+  Props,
+  'address' | 'deviceType' | 'images' | 'index' | 'title'
+>;
 
 export type StateProps = Pick<Props, 'currentPos'>;

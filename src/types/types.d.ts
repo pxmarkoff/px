@@ -42,5 +42,6 @@ export interface Project {
   address: string;
   deviceType: DeviceType;
   images: string[];
+  keywords: string[];
   title: string;
 }

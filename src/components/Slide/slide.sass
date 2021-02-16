@@ -1,30 +1,35 @@
+$glow-color: #494949
+
+$light-side-mobile: 100px
+$light-side-tablet: 230px
+$light-side-desktop: 240px
+
 .slide
     @include flex-center
     height: calc(100vh - #{$header-height})
     position: relative
     width: 100%
-    border: 1px solid pink
 
-    &__title
-        cursor: pointer
-        user-select: none
+    &__light
+        @include absolute-center
+        background: #383838
+        border-radius: 50%
         position: absolute
-        // border: 1px solid blue
-        bottom: 0
-        top: 0
-        color: $black-hard
-        margin: auto
-        height: max-content
-        width: max-content
-        left: 0
-        right: 0
-        text-transform: uppercase
-        font:
-            family: 'Suisse'
-            size: 15vw
-            weight: bold
-        letter-spacing: 1px
-        z-index: 120
-        text-align: center
-        mix-blend-mode: difference
-            // family: 'Helvetica Neue'
+        height: $light-side-mobile
+        width: $light-side-mobile
+        box-shadow: 0 0 50px $glow-color, 0 0 100px $glow-color, 0 0 150px $glow-color, 0 0 200px $glow-color, 0 0 250px $glow-color
+
+    &__card
+        position: absolute
+        background: transparent
+
+    @include md
+        &__light
+            height: $light-side-tablet
+            width: $light-side-tablet
+
+    @include lg
+        &__light
+            height: $light-side-desktop
+            width: $light-side-desktop
+

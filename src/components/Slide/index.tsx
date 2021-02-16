@@ -5,20 +5,14 @@ import SlideUI from './UI';
 
 import { OwnProps, Props, StateProps } from './types';
 
-export const SlideContext = React.createContext(undefined);
-
-function Slide({ currentPos, index }: Props) {
+function Slide({ currentPos, index, ...project }: Props) {
   const [isAnimation, setIsAnimation] = React.useState(false);
 
   React.useEffect(() => {
     currentPos === index ? setIsAnimation(true) : setIsAnimation(false);
   }, [currentPos, index]);
 
-  return (
-    <SlideContext.Provider value={{ isAnimation }}>
-      <SlideUI />
-    </SlideContext.Provider>
-  );
+  return <SlideUI isAnimation={isAnimation} project={project} />;
 }
 
 export default withConnect<OwnProps, StateProps, {}>(Slide, [

@@ -2,19 +2,39 @@ import './slide.sass';
 
 import * as React from 'react';
 
-import Device from '../Device';
+import Card from '../Card';
 
-import { budgetTracker } from '@/data/images';
+import { motion } from 'framer-motion';
+import { PropsUI } from './types';
 
-function SlideUI() {
+const DeviceLightAnimation = (isAnimation: boolean) => {
+  return isAnimation
+    ? {
+        animate: {
+          boxShadow: [
+            '0 0 50px #494949, 0 0 100px #494949, 0 0 150px #494949, 0 0 200px #494949, 0 0 250px #494949',
+            '0 0 100px #494949, 0 0 150px #494949, 0 0 200px #494949, 0 0 250px #494949, 0 0 300px #494949',
+            '0 0 50px #494949, 0 0 100px #494949, 0 0 150px #494949, 0 0 200px #494949, 0 0 250px #494949',
+          ],
+        },
+        transition: {
+          duration: 10,
+          repeat: Infinity,
+        },
+      }
+    : {};
+};
+
+function SlideUI({ isAnimation, project }: PropsUI) {
   return (
     <article className='slide' id='slide'>
-      <h2 className='slide__title'>
-        Budget
-        <br />
-        Tracker
-      </h2>
-      <Device cover={budgetTracker[0]} deviceType='tablet' />
+      <motion.div
+        className='slide__light'
+        {...DeviceLightAnimation(isAnimation)}
+      />
+      <div className='slide__card'>
+        <Card isAnimation={isAnimation} project={project} />
+      </div>
     </article>
   );
 }

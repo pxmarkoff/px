@@ -2,8 +2,7 @@ import './slider.sass';
 
 import * as React from 'react';
 
-import Slide from '../Slide';
-import projects from '@/data/projects';
+import SliderContainer from '../SliderContainer';
 
 import { motion } from 'framer-motion';
 import { PropsUI } from './types';
@@ -25,14 +24,7 @@ function SliderUI({ currentPos, slideHeight }: PropsUI) {
         className='slider__wrapper'
         {...SliderWrapperAnimation(currentPos, slideHeight)}
       >
-        <section className='slider__container' id='slides'>
-          {/* {projects.map(({}) => ( */}
-          <Slide index={0} />
-          <Slide index={1} />
-          <Slide index={2} />
-          <Slide index={3} />
-          {/* //   ))} */}
-        </section>
+        <SliderContainer />
       </motion.div>
     </div>
   );

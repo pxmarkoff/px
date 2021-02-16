@@ -12,11 +12,35 @@ function Filter({ filterSelected, setFilterSelected }: Props) {
 
   const isFilterOnPage = useLocation().pathname === '/';
 
+  const [underlinePos, setUnderlinePos] = React.useState(0);
+  const [underlineWidth, setUnderlineWidth] = React.useState(0);
+
+  React.useEffect(() => {
+    const element = document.getElementById(`filter-${filterSelected}`);
+
+    if (element) {
+      const { paddingLeft, paddingRight } = getComputedStyle(element);
+
+      const contentWidth =
+        element.clientWidth -
+        parseFloat(paddingLeft) -
+        parseFloat(paddingRight);
+
+      setUnderlineWidth(contentWidth);
+
+      const positionX = element.offsetLeft + 20;
+
+      setUnderlinePos(positionX);
+    }
+  }, [filterSelected]);
+
   return (
     <FilterUI
       filterSelected={filterSelected}
       isFilterOnPage={isFilterOnPage}
       onTapFilter={onTapFilter}
+      underlinePos={underlinePos}
+      underlineWidth={underlineWidth}
     />
   );
 }
