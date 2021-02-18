@@ -4,13 +4,13 @@
     justify-content: center
 
 @mixin page
-    height: 100vh
-    padding: $header-height 0 20px
+    height: calc(100vh - 40px)
+    padding-top: $header-height
     width: 100vw
     overflow-y: hidden
 
     @include md
-        padding-top: $header-height
+        height: 100vh
 
 @mixin absolute-center
     top: 0
