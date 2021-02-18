@@ -40,7 +40,7 @@ function useSlider({ slide, slider, slides }: UseSlider) {
   const endPos = useSelector((state: ReduxState) => state.slider.endPos);
 
   // Slider movement control
-  function moveFront() {
+  function moveForward() {
     currentPos < endPos
       ? dispatch({ type: SET_CURRENT_POS, payload: currentPos + 1 })
       : dispatch({ type: SET_CURRENT_POS, payload: 0 });
@@ -86,9 +86,35 @@ function useSlider({ slide, slider, slides }: UseSlider) {
       document.getElementById(slider).removeEventListener('wheel', onWheel);
   });
 
+  const [touchStart, setTouchStart] = React.useState(null);
+  const [touchEnd, setTouchEnd] = React.useState(null);
+
+  const onTouchStart = (e: TouchEvent) => {
+    setTouchStart(e.touches[0].clientY);
+  };
+  const onTouchMove = (e: TouchEvent) => {
+    setTouchEnd(e.touches[0].clientY);
+  };
+  const onTouchEnd = (e: TouchEvent) => {
+    const threshold = window.innerHeight / 2;
+
+    touchEnd > threshold ? moveBack() : moveForward();
+  };
+
+  React.useEffect(() => {
+    document.addEventListener('touchstart', onTouchStart);
+    document.addEventListener('touchmove', onTouchMove);
+    document.addEventListener('touchend', onTouchEnd);
+    return () => {
+      document.removeEventListener('touchstart', onTouchStart);
+      document.removeEventListener('touchmove', onTouchMove);
+      document.removeEventListener('touchend', onTouchEnd);
+    };
+  });
+
   React.useEffect(() => {
     if (count >= 4) {
-      if (direction === 'front') moveFront();
+      if (direction === 'front') moveForward();
       if (direction === 'back') moveBack();
       setCount(0);
     }

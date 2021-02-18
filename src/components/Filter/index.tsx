@@ -19,6 +19,7 @@ function Filter({ filterSelected, setFilterSelected }: Props) {
     const element = document.getElementById(`filter-${filterSelected}`);
 
     if (element) {
+      console.log(element.offsetLeft);
       const { paddingLeft, paddingRight } = getComputedStyle(element);
 
       const contentWidth =
