@@ -1,22 +1,132 @@
 import * as React from 'react';
 
-import { ReduxState } from '@/types/types';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   SET_CURRENT_POS,
   SET_END_POS,
   SET_SLIDE_HEIGHT,
 } from '@/reducers/slider';
+import { ReduxState } from '@/types/types';
+import { useDispatch, useSelector } from 'react-redux';
 
-// Object with id's of DOM elements
 interface UseSlider {
   slider: string;
   slide: string;
   slides: string;
 }
 
+enum Direction {
+  Forward = 'Forward',
+  Back = 'Back',
+}
+
+function useWheelSlider(
+  isReady: boolean,
+  moveForward: () => void,
+  moveBack: () => void
+) {
+  const [count, setCount] = React.useState(0);
+  const [direction, setDirection] = React.useState(null);
+
+  const resetCount = () => setCount(0);
+
+  function onWheel(e: WheelEvent) {
+    function initializeDirection(deltaCondition: boolean, _direction: string) {
+      if (deltaCondition) {
+        if (_direction !== direction) resetCount();
+        setDirection(_direction);
+        setCount(count + 1);
+      }
+    }
+
+    initializeDirection(e.deltaY > 0, Direction.Forward);
+    initializeDirection(e.deltaY < 0, Direction.Back);
+  }
+
+  React.useEffect(() => {
+    if (isReady) {
+      document.addEventListener('wheel', onWheel);
+      return () => document.removeEventListener('wheel', onWheel);
+    }
+  });
+
+  React.useEffect(() => {
+    if (count >= 4) {
+      switch (direction) {
+        case Direction.Forward:
+          moveForward();
+          break;
+        case Direction.Back:
+          moveBack();
+          break;
+        default:
+          break;
+      }
+      resetCount();
+    }
+  }, [count, direction]);
+}
+
+function useTouchSlider(
+  isReady: boolean,
+  moveForward: () => void,
+  moveBack: () => void
+) {
+  const [touchStart, setTouchStart] = React.useState(null);
+  const [touchEnd, setTouchEnd] = React.useState(null);
+
+  const onTouchStart = (e: TouchEvent) => {
+    setTouchStart(e.touches[0].clientY);
+  };
+  const onTouchMove = (e: TouchEvent) => {
+    setTouchEnd(e.touches[0].clientY);
+  };
+  const onTouchEnd = () => {
+    const threshold = window.innerHeight / 2;
+
+    if (touchStart < threshold && touchEnd > threshold) moveBack();
+    if (touchStart > threshold && touchEnd < threshold) moveForward();
+
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
+  React.useEffect(() => {
+    if (isReady) {
+      document.addEventListener('touchstart', onTouchStart);
+      document.addEventListener('touchmove', onTouchMove);
+      document.addEventListener('touchend', onTouchEnd);
+      return () => {
+        document.removeEventListener('touchstart', onTouchStart);
+        document.removeEventListener('touchmove', onTouchMove);
+        document.removeEventListener('touchend', onTouchEnd);
+      };
+    }
+  });
+}
+
 function useSlider({ slide, slider, slides }: UseSlider) {
   const dispatch = useDispatch();
+
+  const currentPos = useSelector(
+    (state: ReduxState) => state.slider.currentPos
+  );
+  const endPos = useSelector((state: ReduxState) => state.slider.endPos);
+
+  function onDispatch(type: string, payload: any) {
+    dispatch({ type, payload });
+  }
+
+  function moveForward() {
+    currentPos < endPos
+      ? onDispatch(SET_CURRENT_POS, currentPos + 1)
+      : onDispatch(SET_CURRENT_POS, 0);
+  }
+
+  function moveBack() {
+    currentPos > 0
+      ? onDispatch(SET_CURRENT_POS, currentPos - 1)
+      : onDispatch(SET_CURRENT_POS, endPos);
+  }
 
   const [isReady, setIsReady] = React.useState(false);
 
@@ -28,97 +138,19 @@ function useSlider({ slide, slider, slides }: UseSlider) {
       : setIsReady(false);
   }, []);
 
-  console.log(isReady);
-
-  // Receive properies from state
-  const currentPos = useSelector(
-    (state: ReduxState) => state.slider.currentPos
-  );
-  const slideHeight = useSelector(
-    (state: ReduxState) => state.slider.slideHeight
-  );
-  const endPos = useSelector((state: ReduxState) => state.slider.endPos);
-
-  // Slider movement control
-  function moveForward() {
-    currentPos < endPos
-      ? dispatch({ type: SET_CURRENT_POS, payload: currentPos + 1 })
-      : dispatch({ type: SET_CURRENT_POS, payload: 0 });
-  }
-
-  function moveBack() {
-    currentPos > 0
-      ? dispatch({ type: SET_CURRENT_POS, payload: currentPos - 1 })
-      : dispatch({ type: SET_CURRENT_POS, payload: endPos });
-  }
-
-  // Initialize necessary properties
   React.useEffect(() => {
-    const { offsetHeight } = document.getElementById(slide);
-    const { childElementCount } = document.getElementById(slides);
+    if (isReady) {
+      const { offsetHeight } = document.getElementById(slide);
+      const { childElementCount } = document.getElementById(slides);
 
-    dispatch({ type: SET_SLIDE_HEIGHT, payload: offsetHeight });
-    dispatch({ type: SET_END_POS, payload: childElementCount - 1 });
-  }, []);
-
-  // Properties for wheel event
-  const [count, setCount] = React.useState(0);
-  const [direction, setDirection] = React.useState(null);
-
-  React.useEffect(() => {
-    function onWheel(e: WheelEvent) {
-      const { deltaY } = e;
-
-      if (deltaY > 0) {
-        if (direction === 'back') setCount(0);
-        setDirection('front');
-        setCount(count + 1);
-      }
-      if (deltaY < 0) {
-        if (direction === 'front') setCount(0);
-        setDirection('back');
-        setCount(count + 1);
-      }
+      onDispatch(SET_SLIDE_HEIGHT, offsetHeight);
+      onDispatch(SET_END_POS, childElementCount - 1);
     }
+  }, [isReady]);
 
-    document.getElementById(slider).addEventListener('wheel', onWheel);
-    return () =>
-      document.getElementById(slider).removeEventListener('wheel', onWheel);
-  });
+  useWheelSlider(isReady, moveForward, moveBack);
 
-  const [touchStart, setTouchStart] = React.useState(null);
-  const [touchEnd, setTouchEnd] = React.useState(null);
-
-  const onTouchStart = (e: TouchEvent) => {
-    setTouchStart(e.touches[0].clientY);
-  };
-  const onTouchMove = (e: TouchEvent) => {
-    setTouchEnd(e.touches[0].clientY);
-  };
-  const onTouchEnd = (e: TouchEvent) => {
-    const threshold = window.innerHeight / 2;
-
-    touchEnd > threshold ? moveBack() : moveForward();
-  };
-
-  React.useEffect(() => {
-    document.addEventListener('touchstart', onTouchStart);
-    document.addEventListener('touchmove', onTouchMove);
-    document.addEventListener('touchend', onTouchEnd);
-    return () => {
-      document.removeEventListener('touchstart', onTouchStart);
-      document.removeEventListener('touchmove', onTouchMove);
-      document.removeEventListener('touchend', onTouchEnd);
-    };
-  });
-
-  React.useEffect(() => {
-    if (count >= 4) {
-      if (direction === 'front') moveForward();
-      if (direction === 'back') moveBack();
-      setCount(0);
-    }
-  }, [count, direction]);
+  useTouchSlider(isReady, moveForward, moveBack);
 }
 
 export default useSlider;

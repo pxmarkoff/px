@@ -8,6 +8,7 @@ import { Props, StateProps } from './types';
 
 function Slider({ currentPos, slideHeight }: Props) {
   useSlider({ slide: 'slide', slider: 'slider', slides: 'slides' });
+
   return <SliderUI currentPos={currentPos} slideHeight={slideHeight} />;
 }
 

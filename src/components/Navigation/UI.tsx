@@ -16,13 +16,14 @@ function NavigationUI({ navigationSelected, onFollowingLink }: PropsUI) {
     <nav className='navigation'>
       <ul className='navigation__list'>
         {routes.map(({ name, route }) => (
-          <li
-            className={NavigationItemClassname(name, navigationSelected)}
-            key={name}
-            onClick={onFollowingLink(name)}
-          >
-            <NavLink to={route}>{name}</NavLink>
-          </li>
+          <NavLink key={name} to={route}>
+            <li
+              className={NavigationItemClassname(name, navigationSelected)}
+              onClick={onFollowingLink(name)}
+            >
+              {name}
+            </li>
+          </NavLink>
         ))}
       </ul>
     </nav>

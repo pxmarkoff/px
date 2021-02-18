@@ -3,7 +3,6 @@ import './contact.sass';
 import * as React from 'react';
 
 import { wavingHandEmoji } from '@/data/images';
-import { motion } from 'framer-motion';
 
 function ContactUI() {
   return (

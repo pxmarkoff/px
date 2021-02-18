@@ -14,8 +14,11 @@ const FilterUnderlineAnimation = (
 ) => {
   return {
     animate: {
-      x: underlinePos,
+      left: underlinePos,
       width: `${underlineWidth}px`,
+    },
+    initial: {
+      left: 0,
     },
     transition: {
       duration: 0.35,

@@ -20,7 +20,11 @@ function Routes() {
 
   return (
     <AnimatePresence exitBeforeEnter initial={false}>
-      <motion.div key={location.pathname} {...RouteTransitionAnimation}>
+      <motion.div
+        className='route-transition'
+        key={location.pathname}
+        {...RouteTransitionAnimation}
+      >
         <Switch location={location}>
           <Route />
         </Switch>
