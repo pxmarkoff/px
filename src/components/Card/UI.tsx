@@ -27,6 +27,18 @@ function CardUI({ isAnimation, project }: PropsUI) {
     <div className='card'>
       <a className='card__link' href={project.address} target='_blank'>
         <motion.div
+          animate={{ opacity: isAnimation ? 1 : 0 }}
+          className='card__title'
+          transition={{ duration: 1.5 }}
+        >
+          {project.title.split(' ').map((word) => (
+            <React.Fragment key={word}>
+              <span>{word}</span>
+              <br />
+            </React.Fragment>
+          ))}
+        </motion.div>
+        <motion.div
           className='card__device'
           {...CardDeviceAnimation(isAnimation)}
         >
@@ -38,18 +50,6 @@ function CardUI({ isAnimation, project }: PropsUI) {
             alt={`${project.title}-cover`}
             className='card__cover'
           />
-        </motion.div>
-        <motion.div
-          animate={{ opacity: isAnimation ? 1 : 0 }}
-          className='card__title'
-          transition={{ duration: 1.5 }}
-        >
-          {project.title.split(' ').map((word) => (
-            <React.Fragment key={word}>
-              <span>{word}</span>
-              <br />
-            </React.Fragment>
-          ))}
         </motion.div>
       </a>
     </div>

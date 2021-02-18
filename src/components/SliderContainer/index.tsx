@@ -4,9 +4,9 @@ import withConnect from '@/hoc/withConnect';
 import SliderContainerUI from './UI';
 import projects from '@/data/projects';
 
-import { Props, StateProps } from './types';
+import { DispatchProps, Props, StateProps } from './types';
 
-function SliderContainer({ filterSelected }: Props) {
+function SliderContainer({ filterSelected, setEndPos }: Props) {
   const [filteredProjects, setFilteredProjects] = React.useState(projects);
 
   React.useEffect(() => {
@@ -19,6 +19,10 @@ function SliderContainer({ filterSelected }: Props) {
       );
   }, [filterSelected]);
 
+  React.useEffect(() => setEndPos(filteredProjects.length - 1), [
+    filteredProjects,
+  ]);
+
   return (
     <SliderContainerUI
       filteredProjects={filteredProjects}
@@ -27,6 +31,8 @@ function SliderContainer({ filterSelected }: Props) {
   );
 }
 
-export default withConnect<{}, StateProps, {}>(SliderContainer, [
-  { filter: 'filterSelected' },
-]);
+export default withConnect<{}, StateProps, DispatchProps>(
+  SliderContainer,
+  [{ filter: 'filterSelected' }],
+  ['slider']
+);

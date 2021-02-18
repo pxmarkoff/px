@@ -2,6 +2,7 @@ import { Project } from '@/types/types';
 import {
   budgetTracker as btImages,
   pandemicTrackerBot as ptbImages,
+  recursiveFunction as rfImages,
 } from './images';
 
 const budgetTracker: Project = {
@@ -20,4 +21,16 @@ const pandemicTrackerBot: Project = {
   title: 'Pandemic Tracker Bot',
 };
 
-export default [budgetTracker, pandemicTrackerBot] as Project[];
+const recursiveFunction: Project = {
+  address: 'https://px-recursive-function.netlify.app',
+  deviceType: 'tablet',
+  images: rfImages,
+  keywords: ['Web'],
+  title: 'Recursive Function',
+};
+
+export default [
+  budgetTracker,
+  pandemicTrackerBot,
+  recursiveFunction,
+] as Project[];

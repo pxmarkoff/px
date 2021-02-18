@@ -8,11 +8,11 @@ import PreloadScreen from '../PreloadScreen';
 
 function AppUI({ isPreload }: PropsUI) {
   return (
-    <>
+    <div className='layout'>
       {/* {isPreload && <PreloadScreen />} */}
       <Header />
       <Routes />
-    </>
+    </div>
   );
 }
 
