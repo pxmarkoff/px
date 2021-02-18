@@ -83,8 +83,10 @@ function useTouchSlider(
   const onTouchEnd = () => {
     const threshold = window.innerHeight / 2;
 
-    if (touchStart < threshold && touchEnd > threshold) moveBack();
-    if (touchStart > threshold && touchEnd < threshold) moveForward();
+    if (touchStart && touchEnd) {
+      if (touchStart < threshold && touchEnd > threshold) moveBack();
+      if (touchStart > threshold && touchEnd < threshold) moveForward();
+    }
 
     setTouchStart(null);
     setTouchEnd(null);
